@@ -1,4 +1,4 @@
 ExpressBasicAuth
 ================
 
-Code to accompany article HTTP Basic Auth Explained
+Code to accompany the article HTTP Basic Auth Explained
