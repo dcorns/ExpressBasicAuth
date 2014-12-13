@@ -6,6 +6,7 @@ var express = require('express');
 var bodyparser = require('body-parser');
 var http = require('http');
 var app = express();
+var usefulfunc = require('./usefulfunc');
 
 app.use(bodyparser.json());
 
@@ -13,7 +14,8 @@ app.get('/',function(req, res){
   var authHead = req.get('authorization');
   console.log(authHead);
   if(authHead) {
-    if (authHead === 'Basic dGhlVXNlcjp0aGVQYXNzd29yZA==') {
+    var converted = usefulfunc.decodeBasicAthorizationField(authHead);
+    if (converted === 'theUser:thePassword') {
       res.status(200);
       res.sendFile(__dirname + '/index.html');
     }
