@@ -10,8 +10,16 @@ var app = express();
 app.use(bodyparser.json());
 
 app.get('/',function(req, res){
-  res.status(200);
-  res.sendFile(__dirname + '/index.html');
+  var authHead = req.get('authorization');
+  if(authHead){
+    res.status(200);
+    res.sendFile(__dirname + '/index.html');
+  }
+  else{
+    res.set('WWW-Authenticate', 'Basic realm=\"Authentication Required\"');
+    res.status(401);
+    res.send();
+  }
 });
 
 var server = http.createServer(app);
