@@ -11,25 +11,30 @@ var usefulfunc = require('./usefulfunc');
 app.use(bodyparser.json());
 
 app.get('/',function(req, res){
+  console.log('get request');
   var authHead = req.get('authorization');
   console.log(authHead);
-  if(authHead) {
+  if(authHead){
     var converted = usefulfunc.decodeBasicAthorizationField(authHead);
-    if (converted === 'theUser:thePassword') {
+    console.log(converted);
+    if(converted === 'theUser:thePassword'){
       res.status(200);
       res.sendFile(__dirname + '/index.html');
     }
-    else {
-      res.set('WWW-Authenticate', 'Basic realm=\"Authentication Required\"');
-      res.status(401);
-      res.send();
+    else{
+      authFailed();
     }
   }
   else{
-      res.set('WWW-Authenticate', 'Basic realm=\"Authentication Required\"');
-      res.status(401);
-      res.send();
+    authFailed();
   }
+  function authFailed(){
+    console.log('basic Auth failed!');
+    res.set('WWW-Authenticate', 'Basic realm=\"Authentication Required\"');
+    res.status(401);
+    res.send();
+  }
+
 });
 
 var server = http.createServer(app);
