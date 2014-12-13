@@ -22,15 +22,19 @@ app.get('/',function(req, res){
       res.sendFile(__dirname + '/index.html');
     }
     else{
-      authFailed();
+      authFailed(true);
     }
   }
   else{
-    authFailed();
+    authFailed(false);
   }
-  function authFailed(){
-    console.log('basic Auth failed!');
-    res.set('WWW-Authenticate', 'Basic realm=\"Authentication Required\"');
+  function authFailed(hasField){
+    var msg = '\"Authentication Required\"';
+    if (hasField){
+      msg = '\"Invalid Credentials!\"';
+    }
+    console.log(msg);
+    res.set('WWW-Authenticate', 'Basic realm=' + msg);
     res.status(401);
     res.send();
   }
