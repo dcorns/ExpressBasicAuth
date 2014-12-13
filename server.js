@@ -11,6 +11,7 @@ app.use(bodyparser.json());
 
 app.get('/',function(req, res){
   var authHead = req.get('authorization');
+  console.log(authHead);
   if(authHead){
     res.status(200);
     res.sendFile(__dirname + '/index.html');
