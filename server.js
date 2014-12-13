@@ -12,14 +12,21 @@ app.use(bodyparser.json());
 app.get('/',function(req, res){
   var authHead = req.get('authorization');
   console.log(authHead);
-  if(authHead){
-    res.status(200);
-    res.sendFile(__dirname + '/index.html');
+  if(authHead) {
+    if (authHead === 'Basic dGhlVXNlcjp0aGVQYXNzd29yZA==') {
+      res.status(200);
+      res.sendFile(__dirname + '/index.html');
+    }
+    else {
+      res.set('WWW-Authenticate', 'Basic realm=\"Authentication Required\"');
+      res.status(401);
+      res.send();
+    }
   }
   else{
-    res.set('WWW-Authenticate', 'Basic realm=\"Authentication Required\"');
-    res.status(401);
-    res.send();
+      res.set('WWW-Authenticate', 'Basic realm=\"Authentication Required\"');
+      res.status(401);
+      res.send();
   }
 });
 
