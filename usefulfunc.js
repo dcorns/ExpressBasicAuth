@@ -26,7 +26,7 @@ module.exports = (function(){
         , textOut = ''
       //Use base64bin to store the 6 bit representation of each base64 character
         , base64bin;
-      //Remove the superfolous equal signs from the input
+      //Remove the superfluous equal signs from the input
       if (pad > -1) {
         txt64 = txt64.substr(0, pad);
       }
